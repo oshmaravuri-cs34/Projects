@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useState } from "react";
 import TaskInput from "../components/TaskInput";
@@ -56,11 +57,36 @@ export default function HomeScreen() {
         <TaskEmpty />
       )}
     </ScrollView>
+=======
+import React from "react";
+import { ScrollView, SafeAreaView, StyleSheet } from "react-native";
+import { useTheme } from "../context/ThemeContext";
+import Header from "../components/Header";
+import About from "../components/About";
+import Skills from "../components/Skills";
+import Projects from "../components/Projects";
+import Contact from "../components/Contact";
+
+export default function HomeScreen() {
+  const { theme } = useTheme();
+  
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Header />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+      </ScrollView>
+    </SafeAreaView>
+>>>>>>> 498be2f13e26987a159f6cea3e0bf755399c719a
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+<<<<<<< HEAD
     backgroundColor: "#6d5bd0",
     flex: 1,
     padding: 16
@@ -80,4 +106,8 @@ const styles = StyleSheet.create({
     marginTop: 6,
     color: "#6b7280"
   }
+=======
+    flex: 1,
+  },
+>>>>>>> 498be2f13e26987a159f6cea3e0bf755399c719a
 });
