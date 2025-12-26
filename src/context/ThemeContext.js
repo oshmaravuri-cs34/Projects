@@ -1,55 +1,38 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useState } from 'react';
 
 const ThemeContext = createContext();
 
+export const useTheme = () => useContext(ThemeContext);
+
 export const lightTheme = {
-  background: '#f8f9fa',
-  surface: '#ffffff',
+  background: '#ffffff',
+  surface: '#f8f9fa',
   primary: '#FF6B35',
-  text: '#333333',
+  secondary: '#5856D6',
+  text: '#000000',
   textSecondary: '#666666',
-  border: '#eeeeee',
+  border: '#e1e1e1',
   card: '#ffffff',
+  shadow: 'rgba(0,0,0,0.1)',
 };
 
 export const darkTheme = {
-  background: '#121212',
-  surface: '#1e1e1e',
+  background: '#000000',
+  surface: '#1c1c1e',
   primary: '#FF6B35',
+  secondary: '#5E5CE6',
   text: '#ffffff',
-  textSecondary: '#cccccc',
-  border: '#333333',
-  card: '#2a2a2a',
+  textSecondary: '#8e8e93',
+  border: '#38383a',
+  card: '#2c2c2e',
+  shadow: 'rgba(255,255,255,0.1)',
 };
 
 export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(false);
-  const [theme, setTheme] = useState(lightTheme);
+  const theme = isDark ? darkTheme : lightTheme;
 
-  useEffect(() => {
-    loadTheme();
-  }, []);
-
-  const loadTheme = async () => {
-    try {
-      const savedTheme = await AsyncStorage.getItem('theme');
-      if (savedTheme) {
-        const isDarkMode = savedTheme === 'dark';
-        setIsDark(isDarkMode);
-        setTheme(isDarkMode ? darkTheme : lightTheme);
-      }
-    } catch (error) {
-      console.error('Error loading theme:', error);
-    }
-  };
-
-  const toggleTheme = async () => {
-    const newIsDark = !isDark;
-    setIsDark(newIsDark);
-    setTheme(newIsDark ? darkTheme : lightTheme);
-    await AsyncStorage.setItem('theme', newIsDark ? 'dark' : 'light');
-  };
+  const toggleTheme = () => setIsDark(!isDark);
 
   return (
     <ThemeContext.Provider value={{ theme, isDark, toggleTheme }}>
@@ -57,5 +40,3 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);
